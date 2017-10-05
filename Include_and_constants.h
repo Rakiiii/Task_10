@@ -39,10 +39,10 @@ int BinaryNumbers(int n , int l ) // преобразование 10 го чис
 int Exponentiation(int  Number, int Exponent ) // возведение в степень
 {
     int Result = Number;
-   for(int i = 0 ; i < Exponent ; i++ )
-   {
-       Result = Result * Number ;
-   }
+    for(int i = 0 ; i < Exponent ; i++ )
+    {
+        Result = Result * Number ;
+    }
     return Result;
 }
 

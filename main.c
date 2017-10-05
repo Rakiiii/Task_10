@@ -2,9 +2,9 @@
 #include "Include_and_constants.h"
 
 
-char ReadString()
+void ReadString(char *String)
 {
-    char *String = (char*)malloc( 255 * sizeof( char ) ) , ch;
+    char  ch;
     int i = 0;
     scanf("%c" , &ch);
     while ( ch != '\n' )
@@ -14,48 +14,49 @@ char ReadString()
         scanf( "%c" , &ch );
     }
     String[ i + 1] = '\0';
-    return *String;
 }
 
 
-int SearchStringInString(char MainString[] , char String[]) //исщет в первой строке вторую и возвращает номер начала второй строки в первой
+int SearchStringInString(char *MainString , char *String) //исщет в первой строке вторую и возвращает номер начала второй строки в первой
 {
     int i = 0 , j = 0 , k = 0 ;
 
-    for( i = 0 ; MainString[ i ] != '\0' ; i++ )
-    {
-        for( j = i , k = 0 ; String[ k ] != '\0' && MainString[ j ] == String[ k ]; j++, k++);
-        if( k > 0 && String[ k ] == '\0' )
-            return i;
-    }
+
+        for (i = 0; MainString[i] != '\0'; i++)
+        {
+            for (j = i, k = 0; String[k] != '\0' && MainString[j] == String[k]; j++, k++);
+            if (k > 0 && String[k + 1] == '\0')
+                return i;
+
+        }
+
     return -1;
 }
 
-char CopyString( char *MainString , int Start , int End )
+void CopyString( char *MainString , int Start , int End , char *CopiedString)
 {
-    char *CopiedString = (char*)malloc( ( ( End - Start) - 1) * sizeof( char ) );
+    CopiedString = (char*)malloc( ( ( End - Start) - 1) * sizeof( char ) );
     int j = 0;
     for(int i = Start ; i <= End ; i++)
     {
         CopiedString[ j ] = MainString [ i ];
         j++;
     }
-    return *CopiedString;
+    CopiedString [ j + 1 ] = '\0';
 }
 
 
 
-char ConnectString( char *String1 , char *String2 )
+void ConnectString( char *String1 , char *String2 , char *MainString )
 {
-    char *MainString = (char*)malloc( ( strlen( String1 ) + strlen( String2 ) + 2 ) * sizeof( char ) );
+    MainString = (char*)malloc( ( strlen( String1 ) + strlen( String2 ) + 2 ) * sizeof( char ) );
     strcat( MainString , String1 );
     strcat( MainString , String2 );
-    return  *MainString;
 }
 
 void ReverseString(char *String)
 {
-    for( int i = strlen( String ) - 1 ; i > 0 ; i--)
+    for( int i = strlen( String ) ; i > 0 ; i--)
     {
         printf("%c" , String[ i ]);
     }
@@ -83,23 +84,25 @@ int main()
             case '1' :
                 system("cls");
                 printf("Add main string_\n");
-                String1 = ReadString();
+                ReadString(String1);
                 printf("Add additional string_ \n");
-                String2 = ReadString();
+                ReadString(String2);
                 Point = SearchStringInString(String1 , String2);
+                if(Point != -1)
                 printf("%d" , Point);
+                else printf("There is no such element\n");
                 printf("Press any button to restart the programme_");
                 getch();
                 break;
             case '2' :
                 system("cls");
                 printf("Add main string_\n");
-                String1 = ReadString();
+                ReadString(String1);
                 printf("Add start of part for copy_\n");
                 scanf( "%d" , &Start );
                 printf("Add end of part foe copy_\n");
                 scanf( "%d" , &End );
-                ResultString = CopyString( String1 , Start , End );
+                CopyString( String1 , Start , End , ResultString );
                 printf("%s" , ResultString );
                 printf("Press any button to restart the programme_");
                 getch();
@@ -107,10 +110,10 @@ int main()
             case '3' :
                 system("cls");
                 printf("Add first string_\n");
-                String1 = ReadString();
+                ReadString(String1);
                 printf("Add second string_\n");
-                String2 = ReadString();
-                ResultString = ConnectString( String1 , String2 );
+                ReadString(String2);
+                ConnectString( String1 , String2 , ResultString );
                 printf("%s" , ResultString );
                 printf("Press any button to restart the programme_");
                 getch();
@@ -118,16 +121,16 @@ int main()
             case '4' :
                 system("cls");
                 printf("Add your string_\n");
-                String1 = ReadString();
+                ReadString(String1);
                 ReverseString( String1 );
                 printf("Press any button to restart the programme_");
                 getch();
                 break;
             case '5' :
                 printf("Add first string_\n");
-                String1 = ReadString();
+                ReadString(String1);
                 printf("Add second string_\n");
-                String2 = ReadString();
+                ReadString(String2);
                 if( CompareString( String1 , String2 ) )printf("Your strings are same\n");
                 else printf("Your strings are different\n");
                 printf("Press any button to restart the programme_");
